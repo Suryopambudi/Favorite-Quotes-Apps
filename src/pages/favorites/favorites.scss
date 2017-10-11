@@ -1,0 +1,21 @@
+$fontz: Helvetica, serif;
+
+page-favorites {
+    h2{
+       color: black;
+       font-size: 12+6;
+    }
+    ion-list{
+        margin-bottom: 2px;
+    }
+    ion-item p{
+        color :black;
+    }
+    .classA{
+        font: $fontz;
+    }
+    .classB{
+        @extend .classA;
+        color: black;
+    }
+}

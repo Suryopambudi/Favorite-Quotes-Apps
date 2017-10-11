@@ -1,0 +1,42 @@
+<!--
+  Generated template for the QuotePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Quote</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<ion-card>
+    <ion-card-content text-center>
+      <h2 class="single-quote">{{quote.text}}</h2>
+      <p class="author-name">{{quote.person}}</p>
+    </ion-card-content>
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button color='danger' outline (click)="unfavoriteButton_Click()">
+            Unfavorite
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button color='danger' (click)="cancelButton_Click()">
+          Close baby!
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
