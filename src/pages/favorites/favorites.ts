@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ViewController, AlertController,ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, ViewController, AlertController,ToastController,ActionSheetController } from 'ionic-angular';
 import {QuotePage} from '../quote/quote';
 import {Quote} from '../../data/quotes.interface'; //import the quote variable structure
 import { QuotesService } from '../../services/quotes';
@@ -20,7 +20,7 @@ export class FavoritesPage {
 
   favoriteQuotes : Quote[];
 
-  constructor(public tostCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams,public modalCtrl: ModalController, private quotesService: QuotesService, private settingsSvc: SettingsService, public alertCtrl: AlertController) {
+  constructor(public tostCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams,public modalCtrl: ModalController, private quotesService: QuotesService, private settingsSvc: SettingsService, public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
   }
 
   ionViewWillEnter() {
@@ -41,6 +41,35 @@ export class FavoritesPage {
     return this.settingsSvc.isAltBackground()?'altQuoteBackground': 'quoteBackground';
   }
 
+  presentActionSheet(quote){
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'Quote Options',
+      buttons:[
+        {
+          text: 'Delete',
+          role: 'destructive',
+          handler: () => {
+            this.removeQuoteFromFavorite(quote);
+          }
+        },
+        {
+          text: 'ShowQuoteDetail',
+          handler: () => {
+            this.getQuoteDetails(quote);
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () =>{
+            console.log('kensel');
+          }
+        }
+      ]
+    });
+
+    actionSheet.present();
+  }
   addQuote(q){
     const alert = this.alertCtrl.create({
       title : 'Add New Quote',

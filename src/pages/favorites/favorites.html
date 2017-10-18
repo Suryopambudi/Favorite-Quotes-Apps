@@ -32,9 +32,8 @@
         <p class="classA">{{quote.person}}</p>
       </ion-item>
       <ion-item-options side="right">
-        <button ion-button color="danger" (click)="removeQuoteFromFavorite(quote)">
-          <ion-icon name="trash"></ion-icon>
-            Delete
+        <button ion-button color="light" (click)="presentActionSheet(quote)">
+          <ion-icon name="more"></ion-icon>
         </button>
       </ion-item-options>
     </ion-item-sliding>
