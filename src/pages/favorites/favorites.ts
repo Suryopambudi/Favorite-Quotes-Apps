@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ViewController, AlertController,ToastController,ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, ViewController, AlertController,ToastController,ActionSheetController,PopoverController } from 'ionic-angular';
 import {QuotePage} from '../quote/quote';
 import {Quote} from '../../data/quotes.interface'; //import the quote variable structure
 import { QuotesService } from '../../services/quotes';
 import { SettingsService } from '../../services/settings';
+import { PopoverPage } from '../popover/popover';
+import { authService } from '../../services/auth';
 
 /**
  * Generated class for the FavoritesPage page.
@@ -20,7 +22,23 @@ export class FavoritesPage {
 
   favoriteQuotes : Quote[];
 
-  constructor(public tostCtrl: ToastController, public navCtrl: NavController, public navParams: NavParams,public modalCtrl: ModalController, private quotesService: QuotesService, private settingsSvc: SettingsService, public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
+  constructor(public tostCtrl: ToastController, 
+  public navCtrl: NavController, 
+  public navParams: NavParams, 
+  public modalCtrl: ModalController, 
+  private quotesService: QuotesService, 
+  private settingsSvc: SettingsService, 
+  public alertCtrl: AlertController, 
+  public actionSheetCtrl: ActionSheetController, 
+  public popoverCtrl: PopoverController,
+  private authservice : authService) {
+  }
+
+  presentPopover(myEvent){
+    let popover = this.popoverCtrl.create(PopoverPage);
+    popover.present({
+      ev: myEvent
+    });
   }
 
   ionViewWillEnter() {
@@ -114,6 +132,7 @@ export class FavoritesPage {
 
     toast.present();
   }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad FavoritesPage');
   }
