@@ -110,7 +110,6 @@ export class PopoverPage {
     this.authservice.currentUser().getToken()
     .then(
       (token:string) => {
-        //save the data!
         this.quotesService.storeList(token)
         .subscribe(
           () => {
