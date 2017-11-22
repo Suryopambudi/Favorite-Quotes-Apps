@@ -5,10 +5,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { SettingsPage } from '../pages/settings/settings';
-import { IonicPage, NavController, NavParams, MenuController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, LoadingController} from 'ionic-angular';
 import { SigninPage } from '../pages/signin/signin';
 import { SignupPage } from '../pages/signup/signup';
 import { authService } from '../services/auth';
+import { QuotesService } from '../services/quotes';
 import  firebase  from 'firebase';
 
 @Component({
@@ -23,7 +24,9 @@ export class MyApp {
   signin = false;
   
   @ViewChild('sideMenuContent') nav:NavController
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private menuCtrl : MenuController, private authservice : authService) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, 
+    private menuCtrl : MenuController, private authservice : authService, 
+    private quotes: QuotesService, private loader : LoadingController) {
     platform.ready().then(() => {
       firebase.initializeApp({
         apiKey : "AIzaSyAbyfF44Gp_MyXjhSf9mdR338bxTB3Lp7Q",
@@ -33,6 +36,23 @@ export class MyApp {
       firebase.auth().onAuthStateChanged(user => {
           if(user){
             this.signin = true;
+            let loading = this.loader.create({
+              content: 'Please wait...'
+            });
+            loading.present();
+            this.authservice.currentUser().getIdToken().then(
+              (token: string) => {
+                this.quotes.getdata(token).subscribe(
+                  () => {
+                    console.log('berhasil');
+                  },
+                  error => {
+                    console.log('gagal');
+                  }
+                )
+              }
+            );
+            loading.dismiss();
             this.nav.setRoot(TabsPage);
           }
           else{
